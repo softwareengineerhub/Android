@@ -28,9 +28,13 @@ public class CategoryControllerTask extends AsyncTask {
 
     @Override
     protected Object doInBackground(Object[] objects) {
-        if (categories == null || categories.isEmpty()) {
-            categories = ApplicationConfig.getInstance().getEducationService().findAllCategories();
-        }
+        //if (categories.isEmpty()) {
+            List<Category> res = ApplicationConfig.getInstance().getEducationService().findAllCategories();
+            System.out.println("@@@@res="+res);
+            categories.clear();
+            categories.addAll(res);
+            //categories.addAll(ApplicationConfig.getInstance().getEducationService().findAllCategories());
+        //}
         return null;
     }
 

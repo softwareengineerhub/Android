@@ -26,7 +26,7 @@ public class EducationItemRepositoryImpl implements EduactionItemRepository {
         try {
             List<EducationItem> list = new ArrayList();
             c = datasource.getConnection();
-            PreparedStatement ps = c.prepareStatement("SELECT * FROM category");
+            PreparedStatement ps = c.prepareStatement("SELECT * FROM education_item");
             ResultSet rs = ps.executeQuery();
             EducationItem educationItem = null;
             while (rs.next()) {

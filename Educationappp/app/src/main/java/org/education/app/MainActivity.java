@@ -17,9 +17,9 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent descriptionIntent = new Intent(getApplicationContext(), CategoryActivity.class);
+                Intent categoryIntent = new Intent(getApplicationContext(), CategoryActivity.class);
                 //descriptionIntent.putExtra("com.example.mylistapp.ITEM_INDEX", position);
-                startActivity(descriptionIntent);
+                startActivity(categoryIntent);
             }
         });
     }
