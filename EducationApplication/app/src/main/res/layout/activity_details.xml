@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/details_bg"
+    tools:context=".DetailsActivity">
+
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/details_slideViewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <LinearLayout
+        android:id="@+id/details_myBottomPanel"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@drawable/details_bottom_panel"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@+id/details_slideViewPager"
+        app:layout_constraintEnd_toEndOf="@+id/details_slideViewPager"
+        app:layout_constraintStart_toStartOf="@+id/details_slideViewPager">
+
+
+
+
+        <ImageView
+            android:id="@+id/details_imageView1"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/details_sound1" />
+
+        <ImageView
+            android:id="@+id/details_imageView2"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="0dp"
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/details_sound2" />
+
+        <ImageView
+            android:id="@+id/details_imageView3"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/details_sound3" />
+    </LinearLayout>
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

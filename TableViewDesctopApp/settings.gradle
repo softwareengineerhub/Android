@@ -1,0 +1,2 @@
+rootProject.name='TableViewDesctopApp'
+include ':app'

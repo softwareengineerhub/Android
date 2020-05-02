@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#FFCB0B</color>
+    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorAccent">#03DAC5</color>
+    <color name="colorBackground">#848282</color>
+    <color name="startColor">#2ccc99</color>
+    <color name="shareColor">#FF007F</color>
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="categorybg">#FFCB0B</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="colorTransparentWhite">#cccccc</color>
+</resources>
