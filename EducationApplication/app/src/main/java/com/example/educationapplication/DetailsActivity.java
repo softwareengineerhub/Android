@@ -1,36 +1,42 @@
 package com.example.educationapplication;
 
-import android.app.AlertDialog;
-import android.content.Intent;
-import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
-import com.backend.api.model.details.Details;
 import com.backend.api.repository.LocalRepository;
+import com.backend.api.sound.SmartSoundApi;
 import com.backend.api.sound.SoundApi;
+import com.backend.api.sound.SoundDao;
+import com.backend.api.sound.SoundPlayer;
 import com.example.details.DetailsSliderAdapter;
 import com.example.details.SoundPressStatus;
 
 import java.io.IOException;
+import java.util.concurrent.Callable;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 public class DetailsActivity extends AppCompatActivity {
     private ViewPager mSlideViewPager;
     private DetailsSliderAdapter sliderAdapter;
     private int detailsCurrentPage;
+    private ExecutorService executorService;
+    SoundDao soundDao = new SoundDao();
+    MediaPlayer mediaPlayer = new MediaPlayer();
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        executorService = Executors.newSingleThreadExecutor();
         setContentView(R.layout.activity_details);
         mSlideViewPager = findViewById(R.id.details_slideViewPager);
         sliderAdapter = new DetailsSliderAdapter(this);
@@ -49,16 +55,18 @@ public class DetailsActivity extends AppCompatActivity {
                 }
                 SoundPressStatus.setPressed(true);
                 initSelectAnimation(findViewById(R.id.details_imageView1));
-                String urlPath = SoundApi.getUrl(LocalRepository.getCategoryName(),"d"+detailsCurrentPage,"ch");
-                MediaPlayer mediaPlayer = new MediaPlayer();
-                try {
-                    mediaPlayer.setDataSource(urlPath);
-                    mediaPlayer.prepare(); //don't use prepareAsync for mp3 playback
-                    mediaPlayer.start();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                SoundPressStatus.setPressed(false);
+
+                executorService.submit(new Callable<String>() {
+
+
+                    @Override
+                    public String call() throws Exception {
+                     byte[] data = soundDao.getSoundData(LocalRepository.getCategoryName(),"d"+detailsCurrentPage,"ch");
+                        SoundPlayer.playMp3(data, new MediaPlayer());
+                        SoundPressStatus.setPressed(false);
+                        return "";
+                    }
+                });
 
             }
         });
@@ -72,17 +80,18 @@ public class DetailsActivity extends AppCompatActivity {
                 }
                 SoundPressStatus.setPressed(true);
                 initSelectAnimation(findViewById(R.id.details_imageView2));
-                String urlPath = SoundApi.getUrl(LocalRepository.getCategoryName(),"d"+detailsCurrentPage,"en");
-             //   System.out.println("urlPath="+urlPath);
-                MediaPlayer mediaPlayer = new MediaPlayer();
-                try {
-                    mediaPlayer.setDataSource(urlPath);
-                    mediaPlayer.prepare(); //don't use prepareAsync for mp3 playback
-                    mediaPlayer.start();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                SoundPressStatus.setPressed(false);
+
+                executorService.submit(new Callable<String>() {
+
+
+                    @Override
+                    public String call() throws Exception {
+                        byte[] data = soundDao.getSoundData(LocalRepository.getCategoryName(),"d"+detailsCurrentPage,"en");
+                        SoundPlayer.playMp3(data, new MediaPlayer());
+                        SoundPressStatus.setPressed(false);
+                        return "";
+                    }
+                });
 
             }
         });
@@ -95,18 +104,19 @@ public class DetailsActivity extends AppCompatActivity {
                     return;
                 }
                 SoundPressStatus.setPressed(true);
-
                 initSelectAnimation(findViewById(R.id.details_imageView3));
-                String urlPath = SoundApi.getUrl(LocalRepository.getCategoryName(),"d"+detailsCurrentPage,"ru");
-                MediaPlayer mediaPlayer = new MediaPlayer();
-                try {
-                    mediaPlayer.setDataSource(urlPath);
-                    mediaPlayer.prepare(); //don't use prepareAsync for mp3 playback
-                    mediaPlayer.start();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                SoundPressStatus.setPressed(false);
+
+                executorService.submit(new Callable<String>() {
+
+
+                    @Override
+                    public String call() throws Exception {
+                        byte[] data = soundDao.getSoundData(LocalRepository.getCategoryName(),"d"+detailsCurrentPage,"ru");
+                        SoundPlayer.playMp3(data, new MediaPlayer());
+                        SoundPressStatus.setPressed(false);
+                        return "";
+                    }
+                });
 
             }
         });
@@ -170,5 +180,25 @@ public class DetailsActivity extends AppCompatActivity {
         });
 
         imageView.startAnimation(selectAnimation);
+    }
+
+    private void makeSoundAction(){
+        if(SoundPressStatus.isPressed()){
+            return;
+        }
+        SoundPressStatus.setPressed(true);
+        initSelectAnimation(findViewById(R.id.details_imageView1));
+
+        executorService.submit(new Callable<String>() {
+
+
+            @Override
+            public String call() throws Exception {
+                byte[] data = soundDao.getSoundData(LocalRepository.getCategoryName(),"d"+detailsCurrentPage,"ch");
+                SoundPlayer.playMp3(data, mediaPlayer);
+                SoundPressStatus.setPressed(false);
+                return "";
+            }
+        });
     }
 }

@@ -1,5 +1,6 @@
 package com.backend.api.server;
 
+import com.backend.api.config.ServerConfig;
 import com.backend.api.model.details.Details;
 import com.backend.api.server.data.MessageData;
 
@@ -8,8 +9,8 @@ import java.util.List;
 public class DetailsDao {
     private List<Details> lastVisited;
     private ServerClient serverClient;
-    //private String host = "134.209.244.234";
-    private String host = "128.199.185.171";
+    private String host = ServerConfig.HOST;
+    //private String host = "128.199.185.171";
 
     private int port = 8083;
 
